@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">ping pong</string>
+    <string name="score_format">%d - %d</string>
+
+</resources>
