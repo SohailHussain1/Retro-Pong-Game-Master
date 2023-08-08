@@ -136,14 +136,21 @@ public class PongGameView extends View {
             // Player 2 scores
             player2Score = 0;
             player1Score = 0;
-            Toast.makeText(getContext(), "Player 2 wins!", Toast.LENGTH_SHORT).show();
+            if (player1Score == player2Score) {
+                Toast.makeText(getContext(), "Match Draw!", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getContext(), "Player 2 wins!", Toast.LENGTH_SHORT).show();
+            }
             resetGame();
         } else if (ballX > screenWidth) {
             // Player 1 scores
             player1Score = 0;
             player2Score = 0;
-            Toast.makeText(getContext(), "Player 1 wins!", Toast.LENGTH_SHORT).show();
-            resetGame();
+            if (player1Score == player2Score) {
+                Toast.makeText(getContext(), "Match Draw!", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getContext(), "Player 1 wins!", Toast.LENGTH_SHORT).show();
+            }            resetGame();
         }
 
         invalidate(); // Force redrawing the view
