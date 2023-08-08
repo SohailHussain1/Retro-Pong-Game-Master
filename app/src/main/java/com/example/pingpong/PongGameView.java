@@ -9,6 +9,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
+import java.util.Random;
+
 public class PongGameView extends View {
     // Game variables
     private int screenWidth, screenHeight;
@@ -44,12 +46,18 @@ public class PongGameView extends View {
         isAnimationRunning = false;
         paddle1Y = (screenHeight - paddleHeight) / 2;
         paddle2Y = (screenHeight - paddleHeight) / 2;
+
+        // Set the ball's initial position in the middle of the screen
         ballX = screenWidth / 2;
         ballY = screenHeight / 2;
-        ballVelX = -25; // Increase this value for faster horizontal speed
+
+        // Randomly choose the direction to start for the ball (left or right)
+        int randomDirection = new Random().nextInt(2); // 0 or 1
+
+        // Set the initial velocity based on the chosen direction
+        ballVelX = (randomDirection == 0) ? -25 : 25; // Vary the direction based on the random value
         ballVelY = -25; // Increase this value for faster vertical speed
     }
-
     @Override
     protected void onDraw(Canvas canvas) {
         canvas.drawColor(Color.BLACK);
@@ -134,23 +142,25 @@ public class PongGameView extends View {
         // Check for ball out of bounds (score point)
         if (ballX < 0) {
             // Player 2 scores
-            player2Score = 0;
-            player1Score = 0;
+
             if (player1Score == player2Score) {
                 Toast.makeText(getContext(), "Match Draw!", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(getContext(), "Player 2 wins!", Toast.LENGTH_SHORT).show();
             }
+            player2Score = 0;
+            player1Score = 0;
             resetGame();
         } else if (ballX > screenWidth) {
             // Player 1 scores
-            player1Score = 0;
-            player2Score = 0;
+
             if (player1Score == player2Score) {
                 Toast.makeText(getContext(), "Match Draw!", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(getContext(), "Player 1 wins!", Toast.LENGTH_SHORT).show();
-            }            resetGame();
+            }            player1Score = 0;
+            player2Score = 0;
+            resetGame();
         }
 
         invalidate(); // Force redrawing the view
